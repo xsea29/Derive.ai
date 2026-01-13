@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Users, Briefcase, Settings, Send, Mail, Copy, FileDown, AlertCircle, Check, MessageSquare, Mic, Video, Brain, Clock, Sparkles, Shield, Bell, Calendar, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -37,27 +38,31 @@ const deliveryOptions = [
   },
 ];
 
-export default function ReviewLaunch({
-  candidates = [],
-  jobContext = {},
-  accessPolicy = {},
-  notifications = {},
-  deliveryMethod = { type: "email" },
+export function ReviewLaunch({
+  candidates,
+  jobContext,
+  accessPolicy,
+  notifications,
+  deliveryMethod,
   setDeliveryMethod,
   onLaunch,
   onBack,
 }) {
   const validCandidates = candidates.filter((c) => c.isValid);
   const invalidCandidates = candidates.filter((c) => !c.isValid);
-  const TypeIcon = typeIcons[jobContext.interviewType] || MessageSquare;
+  const TypeIcon = typeIcons[jobContext.interviewType];
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl mx-auto">
       <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Main summary cards */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Candidates Summary */}
-          <div className="rounded-lg sm:rounded-xl bg-card border border-border p-4 sm:p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-lg sm:rounded-xl bg-card border border-border card-elevated p-4 sm:p-6"
+          >
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
@@ -69,16 +74,16 @@ export default function ReviewLaunch({
             </div>
 
             <div className="space-y-2 sm:space-y-3">
-              <div className="flex items-center justify-between p-2.5 sm:p-3 bg-green-500/10 rounded-lg">
+              <div className="flex items-center justify-between p-2.5 sm:p-3 bg-success/10 rounded-lg">
                 <div className="flex items-center gap-2">
-                  <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600" />
+                  <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-success" />
                   <span className="text-xs sm:text-sm font-medium">{validCandidates.length} candidates imported</span>
                 </div>
               </div>
               {invalidCandidates.length > 0 && (
-                <div className="flex items-center justify-between p-2.5 sm:p-3 bg-red-500/10 rounded-lg">
+                <div className="flex items-center justify-between p-2.5 sm:p-3 bg-destructive/10 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <AlertCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-600" />
+                    <AlertCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-destructive" />
                     <span className="text-xs sm:text-sm">{invalidCandidates.length} invalid emails skipped</span>
                   </div>
                 </div>
@@ -106,10 +111,15 @@ export default function ReviewLaunch({
                 </div>
               </div>
             )}
-          </div>
+          </motion.div>
 
           {/* Job Context Summary */}
-          <div className="rounded-xl bg-card border border-border p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="rounded-xl bg-card border border-border card-elevated p-6"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Briefcase className="h-5 w-5 text-primary" />
@@ -133,9 +143,9 @@ export default function ReviewLaunch({
               )}
               <div className="flex items-start justify-between">
                 <dt className="text-sm text-muted-foreground">Experience Level</dt>
-                <dd className="text-sm font-medium text-right capitalize">{jobContext.experienceLevel || "—"}</dd>
+                <dd className="text-sm font-medium text-right capitalize">{jobContext.experienceLevel}</dd>
               </div>
-              {jobContext.skills && jobContext.skills.length > 0 && (
+              {jobContext.skills.length > 0 && (
                 <div className="flex items-start justify-between">
                   <dt className="text-sm text-muted-foreground">Skills</dt>
                   <dd className="flex flex-wrap justify-end gap-1 max-w-[200px]">
@@ -154,14 +164,19 @@ export default function ReviewLaunch({
                 <dt className="text-sm text-muted-foreground">Interview Type</dt>
                 <dd className="flex items-center gap-2">
                   <TypeIcon className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium">{typeLabels[jobContext.interviewType] || "Unknown"}</span>
+                  <span className="text-sm font-medium">{typeLabels[jobContext.interviewType]}</span>
                 </dd>
               </div>
             </dl>
-          </div>
+          </motion.div>
 
           {/* Interview Rules */}
-          <div className="rounded-xl bg-card border border-border p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="rounded-xl bg-card border border-border card-elevated p-6"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Settings className="h-5 w-5 text-primary" />
@@ -178,7 +193,7 @@ export default function ReviewLaunch({
                   <Brain className="h-4 w-4" />
                   <span className="text-xs">Questions</span>
                 </div>
-                <div className="text-lg font-semibold">{jobContext.questionCount || 6}</div>
+                <div className="text-lg font-semibold">{jobContext.questionCount}</div>
               </div>
               <div className="p-3 bg-muted/30 rounded-lg">
                 <div className="flex items-center gap-2 text-muted-foreground mb-1">
@@ -186,7 +201,7 @@ export default function ReviewLaunch({
                   <span className="text-xs">Duration</span>
                 </div>
                 <div className="text-lg font-semibold">
-                  ~{(jobContext.questionCount || 6) * (jobContext.timePerQuestion || 3)}m
+                  ~{jobContext.questionCount * jobContext.timePerQuestion}m
                 </div>
               </div>
             </div>
@@ -194,7 +209,7 @@ export default function ReviewLaunch({
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 {jobContext.adaptiveDifficulty ? (
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                 ) : (
                   <span className="h-4 w-4 rounded-full border border-muted-foreground" />
                 )}
@@ -204,7 +219,7 @@ export default function ReviewLaunch({
               </div>
               <div className="flex items-center gap-2 text-sm">
                 {jobContext.allowResumeReference ? (
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                 ) : (
                   <span className="h-4 w-4 rounded-full border border-muted-foreground" />
                 )}
@@ -213,10 +228,15 @@ export default function ReviewLaunch({
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Access Policy Summary */}
-          <div className="rounded-xl bg-card border border-border p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="rounded-xl bg-card border border-border card-elevated p-6"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Shield className="h-5 w-5 text-primary" />
@@ -228,33 +248,36 @@ export default function ReviewLaunch({
             </div>
 
             <div className="space-y-3 text-sm">
-              {accessPolicy.validUntil && (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  <span>Valid until: {new Date(accessPolicy.validUntil).toLocaleDateString()}</span>
-                </div>
-              )}
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Calendar className="h-4 w-4" />
+                <span>Valid until: {new Date(accessPolicy.validUntil).toLocaleDateString()}</span>
+              </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <RefreshCw className="h-4 w-4" />
-                <span>{accessPolicy.maxAttempts || 1} attempt{(accessPolicy.maxAttempts || 1) > 1 ? 's' : ''} allowed</span>
+                <span>{accessPolicy.maxAttempts} attempt{accessPolicy.maxAttempts > 1 ? 's' : ''} allowed</span>
               </div>
               {accessPolicy.canResume && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>Resume on disconnect</span>
                 </div>
               )}
               {accessPolicy.deviceLock && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>Device lock enabled</span>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Notifications Summary */}
-          <div className="rounded-xl bg-card border border-border p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="rounded-xl bg-card border border-border card-elevated p-6"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Bell className="h-5 w-5 text-primary" />
@@ -268,35 +291,40 @@ export default function ReviewLaunch({
             <div className="space-y-2">
               {notifications.sendInvite && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>Interview invite</span>
                 </div>
               )}
               {notifications.reminder24h && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>24-hour reminder</span>
                 </div>
               )}
               {notifications.expiryWarning && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>Expiry warning</span>
                 </div>
               )}
               {notifications.onSubmitted && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-success" />
                   <span>Submission confirmation</span>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Delivery method sidebar */}
         <div className="lg:col-span-1">
-          <div className="rounded-xl bg-card border border-border p-6 sticky top-24">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="rounded-xl bg-card border border-border card-elevated p-6 sticky top-24"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Send className="h-5 w-5 text-primary" />
@@ -334,7 +362,7 @@ export default function ReviewLaunch({
 
             <Button
               onClick={onLaunch}
-              className="w-full mt-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white gap-2"
+              className="w-full mt-6 ai-gradient ai-glow-sm gap-2"
               size="lg"
             >
               <Sparkles className="h-4 w-4" />
@@ -344,7 +372,7 @@ export default function ReviewLaunch({
             <p className="text-xs text-muted-foreground text-center mt-3">
               Candidates will receive a secure interview link
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
 

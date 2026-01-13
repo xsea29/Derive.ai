@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import CandidateImport from "@/components/interview/create/CandidateImport";
-import JobContextSetup from "@/components/interview/create/JobContextSetup";
+import { CandidateImport } from "@/components/interview/create/CandidateImport";
+import { JobContextSetup } from "@/components/interview/create/JobContextSetup";
 import AccessPolicyConfig from "@/components/interview/create/AccessPolicyConfig";
 import NotificationConfig from "@/components/interview/create/NotificationConfig";
-import ReviewLaunch from "@/components/interview/create/ReviewLaunch";
+import { ReviewLaunch } from "@/components/interview/create/ReviewLaunch";
 import SuccessScreen from "@/components/interview/create/SuccessScreen";
 
 const steps = [
@@ -19,7 +19,7 @@ const steps = [
   { id: 4, name: "Review & Launch", description: "Confirm and send" },
 ];
 
-export default function CreateInterview() {
+function CreateInterview() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
   
@@ -103,7 +103,7 @@ export default function CreateInterview() {
 
         {/* Progress steps - Mobile: horizontal scrollable, compact */}
         <div className="mb-6 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0">
-          <div className="flex items-center gap-2 sm:gap-0 sm:justify-between max-w-2xl overflow-x-auto pb-2 sm:pb-0">
+          <div className="flex items-center gap-2 sm:gap-0 sm:justify-between w-full overflow-x-auto pb-2 sm:pb-0">
             {steps.map((step, index) => (
               <div key={step.id} className="flex items-center flex-shrink-0">
                 <div className="flex items-center gap-2 sm:gap-3">
@@ -228,7 +228,10 @@ function AccessNotifyStep({
         </p>
       </div>
 
-      <AccessPolicyConfig policy={accessPolicy} onChange={setAccessPolicy} />
+      <AccessPolicyConfig 
+        policy={accessPolicy} 
+        onChange={setAccessPolicy} 
+      />
       <NotificationConfig
         settings={notifications}
         onChange={setNotifications}
@@ -246,3 +249,5 @@ function AccessNotifyStep({
     </div>
   );
 }
+
+export default CreateInterview;

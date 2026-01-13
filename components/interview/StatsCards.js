@@ -52,7 +52,7 @@ export function StatsCards() {
             <span
               className={`text-[10px] sm:text-xs font-medium px-1.5 sm:px-2 py-0.5 rounded-full ${
                 stat.changeType === 'positive'
-                  ? 'bg-success/10 text-success'
+                  ? 'bg-[hsl(142,71%,45%)]/15 text-[hsl(142,71%,45%)]'
                   : 'bg-muted text-muted-foreground'
               }`}
             >

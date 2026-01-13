@@ -157,10 +157,17 @@ export function RecentInterviews() {
 }
 
 function StatusBadge({ status }) {
-  const styles = {
-    active: 'status-badge bg-success/10 text-success',
-    completed: 'status-badge bg-primary/10 text-primary',
-    draft: 'status-badge status-pending',
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 'active':
+        return 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-[hsl(142,71%,45%)]/30 bg-[hsl(142,71%,45%)]/15 text-[hsl(142,71%,45%)]';
+      case 'completed':
+        return 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-[hsl(192,91%,46%)]/30 bg-[hsl(192,91%,46%)]/10 text-[hsl(192,91%,46%)]';
+      case 'draft':
+        return 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground';
+      default:
+        return '';
+    }
   };
 
   const labels = {
@@ -169,5 +176,5 @@ function StatusBadge({ status }) {
     draft: 'Draft',
   };
 
-  return <span className={styles[status]}>{labels[status]}</span>;
+  return <span className={getStatusClass(status)}>{labels[status]}</span>;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Brain, Mic, Video, MessageSquare, Plus, X, Sliders } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
 import AIExplainability from "./AIExplainability";
 import CalibrationSlider from "./CalibrationSlider";
 
@@ -41,19 +41,19 @@ const experienceLevels = [
   { value: "senior", label: "Senior (5+ years)" },
 ];
 
-export default function JobContextSetup({ data = {}, setData, onNext, onBack }) {
+export function JobContextSetup({ data, setData, onNext, onBack }) {
   const [newSkill, setNewSkill] = useState("");
   const [calibration, setCalibration] = useState(50); // Balanced by default
 
   const addSkill = () => {
-    if (newSkill.trim() && !data.skills?.includes(newSkill.trim())) {
-      setData({ ...data, skills: [...(data.skills || []), newSkill.trim()] });
+    if (newSkill.trim() && !data.skills.includes(newSkill.trim())) {
+      setData({ ...data, skills: [...data.skills, newSkill.trim()] });
       setNewSkill("");
     }
   };
 
   const removeSkill = (skill) => {
-    setData({ ...data, skills: (data.skills || []).filter((s) => s !== skill) });
+    setData({ ...data, skills: data.skills.filter((s) => s !== skill) });
   };
 
   const handleKeyDown = (e) => {
@@ -63,11 +63,11 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
     }
   };
 
-  const isValid = data.title?.trim() !== "" && data.interviewType;
+  const isValid = data.title.trim() !== "" && data.interviewType;
 
   return (
-    <div className="max-w-4xl">
-      <div className="rounded-lg sm:rounded-xl bg-card border border-border p-4 sm:p-6">
+    <div className="max-w-4xl mx-auto">
+      <div className="rounded-lg sm:rounded-xl bg-card border border-border card-elevated p-4 sm:p-6">
         {/* Info banner */}
         <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-accent/50 rounded-lg mb-4 sm:mb-6">
           <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-primary mt-0.5 shrink-0" />
@@ -93,7 +93,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
               <div>
                 <label className="text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 block">Job Title *</label>
                 <Input
-                  value={data.title || ""}
+                  value={data.title}
                   onChange={(e) => setData({ ...data, title: e.target.value })}
                   placeholder="e.g., Senior Frontend Developer"
                   className="text-sm"
@@ -102,7 +102,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
               <div>
                 <label className="text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 block">Department</label>
                 <Input
-                  value={data.department || ""}
+                  value={data.department}
                   onChange={(e) => setData({ ...data, department: e.target.value })}
                   placeholder="e.g., Engineering"
                   className="text-sm"
@@ -111,7 +111,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
               <div className="sm:col-span-1">
                 <label className="text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 block">Experience Level</label>
                 <Select
-                  value={data.experienceLevel || ""}
+                  value={data.experienceLevel}
                   onValueChange={(v) =>
                     setData({ ...data, experienceLevel: v })
                   }
@@ -137,7 +137,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
                 </span>
               </label>
               <Textarea
-                value={data.description || ""}
+                value={data.description}
                 onChange={(e) => setData({ ...data, description: e.target.value })}
                 placeholder="Describe the role, responsibilities..."
                 className="min-h-[100px] sm:min-h-[120px] text-sm"
@@ -172,7 +172,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
-              {data.skills && data.skills.length > 0 && (
+              {data.skills.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {data.skills.map((skill) => (
                     <span
@@ -214,7 +214,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
                 >
                   {data.interviewType === type.id && (
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-primary flex items-center justify-center">
-                      <span className="text-white text-[10px] sm:text-xs">✓</span>
+                      <span className="text-primary-foreground text-[10px] sm:text-xs">✓</span>
                     </div>
                   )}
                   <type.icon className={`h-5 w-5 sm:h-6 sm:w-6 mb-2 sm:mb-3 ${
@@ -243,10 +243,10 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <label className="text-sm font-medium">Number of Questions</label>
-                  <span className="text-sm text-primary font-medium">{data.questionCount || 6}</span>
+                  <span className="text-sm text-primary font-medium">{data.questionCount}</span>
                 </div>
                 <Slider
-                  value={[data.questionCount || 6]}
+                  value={[data.questionCount]}
                   onValueChange={([v]) => setData({ ...data, questionCount: v })}
                   min={3}
                   max={15}
@@ -259,17 +259,17 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <label className="text-sm font-medium">Time per Question (minutes)</label>
-                  <span className="text-sm text-primary font-medium">{data.timePerQuestion || 3}m</span>
+                  <span className="text-sm text-primary font-medium">{data.timePerQuestion}m</span>
                 </div>
                 <Slider
-                  value={[data.timePerQuestion || 3]}
+                  value={[data.timePerQuestion]}
                   onValueChange={([v]) => setData({ ...data, timePerQuestion: v })}
                   min={1}
                   max={10}
                   step={1}
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  Total duration: ~{(data.questionCount || 6) * (data.timePerQuestion || 3)} minutes
+                  Total duration: ~{data.questionCount * data.timePerQuestion} minutes
                 </p>
               </div>
             </div>
@@ -283,7 +283,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
                   </p>
                 </div>
                 <Switch
-                  checked={data.adaptiveDifficulty || false}
+                  checked={data.adaptiveDifficulty}
                   onCheckedChange={(v) => setData({ ...data, adaptiveDifficulty: v })}
                 />
               </div>
@@ -295,7 +295,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
                   </p>
                 </div>
                 <Switch
-                  checked={data.allowResumeReference || false}
+                  checked={data.allowResumeReference}
                   onCheckedChange={(v) => setData({ ...data, allowResumeReference: v })}
                 />
               </div>
@@ -314,7 +314,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
           </section>
 
           {/* AI Explainability Panel */}
-          {(data.title || (data.skills && data.skills.length > 0)) && (
+          {(data.title || data.skills.length > 0) && (
             <section>
               <h3 className="text-base font-medium mb-4 flex items-center gap-2">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-semibold">
@@ -332,7 +332,7 @@ export default function JobContextSetup({ data = {}, setData, onNext, onBack }) 
         <Button variant="outline" onClick={onBack} className="w-full sm:w-auto">
           Back
         </Button>
-        <Button onClick={onNext} disabled={!isValid} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white w-full sm:w-auto">
+        <Button onClick={onNext} disabled={!isValid} className="ai-gradient w-full sm:w-auto">
           Preview Interview Setup
         </Button>
       </div>

@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Upload, FileSpreadsheet, Mail, Link2, AlertCircle, Check, X, Database } from "lucide-react";
+import { Upload, FileSpreadsheet, Mail, Link2, AlertCircle, Check, X, ChevronDown, Database, FileCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import MappingTemplates from "./MappingTemplates";
+import { Badge } from "@/components/ui/badge";
 
-export default function CandidateImport({ candidates = [], setCandidates, onNext }) {
+export function CandidateImport({ candidates, setCandidates, onNext }) {
   const [activeTab, setActiveTab] = useState("csv");
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -165,7 +166,7 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
   ];
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl mx-auto">
       {/* Tabs - scrollable on mobile */}
       <div className="flex gap-1 p-1 bg-muted rounded-xl mb-4 sm:mb-6 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 sm:inline-flex">
         {tabs.map((tab) => (
@@ -190,14 +191,14 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
               </span>
             )}
             {tab.highlighted && activeTab === tab.id && (
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 sm:w-8 h-0.5 rounded-full bg-primary" />
+              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 sm:w-8 h-0.5 rounded-full tab-indicator" />
             )}
           </button>
         ))}
       </div>
 
       {/* Tab Content */}
-      <div className="rounded-xl bg-card border border-border">
+      <div className="rounded-xl bg-card border border-border card-elevated">
         {activeTab === "csv" && (
           <div className="p-6">
             {!uploadedFile ? (
@@ -205,7 +206,7 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${isDragging ? "border-primary bg-primary/5" : "border-border"}`}
+                className={`upload-zone text-center ${isDragging ? "upload-zone-active" : ""}`}
               >
                 <input
                   type="file"
@@ -340,9 +341,9 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
                                 <td className="px-4 py-2.5">
                                   {columnMapping.email && (
                                     isValid ? (
-                                      <Check className="h-4 w-4 text-green-600" />
+                                      <Check className="h-4 w-4 text-success" />
                                     ) : (
-                                      <AlertCircle className="h-4 w-4 text-red-600" />
+                                      <AlertCircle className="h-4 w-4 text-destructive" />
                                     )
                                   )}
                                 </td>
@@ -350,7 +351,7 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
                                   <td 
                                     key={cellIndex} 
                                     className={`px-4 py-2.5 ${
-                                      cellIndex === emailColIndex && !isValid ? "text-red-600" : ""
+                                      cellIndex === emailColIndex && !isValid ? "text-destructive" : ""
                                     }`}
                                   >
                                     {cell}
@@ -405,12 +406,12 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
               
               {candidates.length > 0 && (
                 <div className="flex items-center gap-4 text-sm">
-                  <span className="flex items-center gap-1.5 text-green-600">
+                  <span className="flex items-center gap-1.5 text-success">
                     <Check className="h-4 w-4" />
                     {validCount} valid emails
                   </span>
                   {invalidCount > 0 && (
-                    <span className="flex items-center gap-1.5 text-red-600">
+                    <span className="flex items-center gap-1.5 text-destructive">
                       <AlertCircle className="h-4 w-4" />
                       {invalidCount} invalid
                     </span>
@@ -448,7 +449,7 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
             <span>
               <strong className="text-foreground">{validCount}</strong> candidates ready
               {invalidCount > 0 && (
-                <span className="text-red-600 ml-1 sm:ml-2">
+                <span className="text-destructive ml-1 sm:ml-2">
                   ({invalidCount} skipped)
                 </span>
               )}
@@ -458,7 +459,7 @@ export default function CandidateImport({ candidates = [], setCandidates, onNext
         <Button
           onClick={onNext}
           disabled={validCount === 0}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white w-full sm:w-auto"
+          className="ai-gradient w-full sm:w-auto"
         >
           Continue to Job Setup
         </Button>
@@ -480,7 +481,7 @@ function MappingSelect({
         {label}
       </label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className={required && !value ? "border-red-600" : ""}>
+        <SelectTrigger className={required && !value ? "border-destructive" : ""}>
           <SelectValue placeholder="Select column" />
         </SelectTrigger>
         <SelectContent>

@@ -8,7 +8,7 @@ import { Brain, Bell, Settings, User, Link2, Menu, Shield, Building2 } from "luc
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export default function Header() {
+export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   

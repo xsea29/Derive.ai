@@ -1,56 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-
+/* AI Interview Platform Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Core palette - Navy & Electric Cyan */
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 222 47% 11%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --popover-foreground: 222 47% 11%;
+    
+    /* Primary: Electric Cyan - Tech-forward */
+    --primary: 192 91% 46%;
+    --primary-foreground: 222 47% 11%;
+    
+    /* Secondary: Light slate */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 20%;
+    
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 9% 46%;
+    
+    /* Accent: Soft cyan for highlights */
+    --accent: 192 60% 94%;
+    --accent-foreground: 192 91% 36%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Success states */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning states */
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 10%;
+    
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 192 91% 46%;
+    
+    --radius: 0.625rem;
+    
+    /* AI-specific tokens */
+    --ai-gradient-start: 192 91% 46%;
+    --ai-gradient-end: 199 89% 58%;
+    --ai-glow: 192 91% 46%;
+    
+    /* Surface elevation */
+    --surface-1: 0 0% 100%;
+    --surface-2: 220 20% 97%;
+    --surface-3: 220 14% 94%;
+    
+    /* Sidebar - Deep navy */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -60,31 +70,46 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 222 47% 6%;
+    --foreground: 220 20% 98%;
+    
+    --card: 222 47% 9%;
+    --card-foreground: 220 20% 98%;
+    
+    --popover: 222 47% 9%;
+    --popover-foreground: 220 20% 98%;
+    
+    --primary: 192 91% 56%;
+    --primary-foreground: 222 47% 6%;
+    
+    --secondary: 222 47% 15%;
+    --secondary-foreground: 220 20% 98%;
+    
+    --muted: 222 47% 15%;
+    --muted-foreground: 220 14% 60%;
+    
+    --accent: 192 50% 15%;
+    --accent-foreground: 192 91% 70%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 142 71% 50%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 55%;
+    --warning-foreground: 38 92% 10%;
+    
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 192 91% 56%;
+    
+    --surface-1: 222 47% 9%;
+    --surface-2: 222 47% 11%;
+    --surface-3: 222 47% 15%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -93,6 +118,148 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer components {
+  /* AI Gradient backgrounds */
+  .ai-gradient {
+    background: linear-gradient(135deg, hsl(var(--ai-gradient-start)) 0%, hsl(var(--ai-gradient-end)) 100%);
+  }
+  
+  .ai-gradient-subtle {
+    background: linear-gradient(135deg, hsl(var(--ai-gradient-start) / 0.1) 0%, hsl(var(--ai-gradient-end) / 0.15) 100%);
+  }
+  
+  .ai-glow {
+    box-shadow: 0 0 40px -10px hsl(var(--ai-glow) / 0.4);
+  }
+  
+  .ai-glow-sm {
+    box-shadow: 0 0 20px -5px hsl(var(--ai-glow) / 0.3);
+  }
+  
+  /* Card elevation system */
+  .card-elevated {
+    box-shadow: 
+      0 1px 3px hsl(220 25% 10% / 0.04),
+      0 4px 12px hsl(220 25% 10% / 0.06);
+  }
+  
+  .card-elevated-hover {
+    box-shadow: 
+      0 2px 8px hsl(220 25% 10% / 0.06),
+      0 8px 24px hsl(220 25% 10% / 0.1);
+  }
+  
+  /* Tab indicator */
+  .tab-indicator {
+    background: linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--ai-gradient-end)) 100%);
+  }
+  
+  /* Status badges */
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .status-pending {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  .status-in-progress {
+    @apply bg-warning/15 text-warning;
+  }
+  
+  .status-completed {
+    @apply bg-success/15 text-success;
+  }
+  
+  /* Upload zone */
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-xl p-8 transition-all duration-200;
+    @apply hover:border-primary/50 hover:bg-accent/30;
+  }
+  
+  .upload-zone-active {
+    @apply border-primary bg-accent/50;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    backdrop-filter: blur(12px);
+    background: hsl(var(--background) / 0.8);
+  }
+
+  /* Card component */
+  .card {
+    padding: 2em;
+  }
+
+  /* Secondary text styling */
+  .read-the-docs {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Root container - optional legacy support */
+  #root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* Logo animations - optional */
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 2em hsl(var(--primary) / 0.67));
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
   }
 }
 

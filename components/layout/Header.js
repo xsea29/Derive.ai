@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Brain, Bell, Settings, User, Link2, Menu, Shield, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 export function Header() {
   const pathname = usePathname();
@@ -26,16 +26,17 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-lg">
-      <div className="container flex h-14 sm:h-16 items-center justify-between">
-        <div className="flex items-center gap-2 sm:gap-4">
+      <div className="container flex h-14 sm:h-16 items-center justify-between gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           {/* Mobile menu trigger */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="text-muted-foreground -ml-2">
+            <SheetTrigger asChild className="md:hidden tap-target">
+              <Button variant="ghost" size="icon" className="text-muted-foreground">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 p-0">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="flex flex-col h-full">
                 <div className="flex items-center gap-2.5 p-4 border-b border-border">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600">
@@ -50,7 +51,7 @@ export function Header() {
                       href={link.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                        "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors tap-target",
                         isActive(link.path)
                           ? "bg-primary/10 text-primary"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -66,7 +67,7 @@ export function Header() {
                     href="/settings"
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors tap-target",
                       isActive("/settings")
                         ? "bg-primary/10 text-primary"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -80,11 +81,11 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600">
+          <Link href="/" className="flex items-center gap-2 min-w-0">
+            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 shrink-0">
               <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
             </div>
-            <span className="text-base sm:text-lg font-semibold tracking-tight hidden sm:block">Derive.ai</span>
+            <span className="text-base sm:text-lg font-semibold tracking-tight hidden sm:block truncate">Derive.ai</span>
           </Link>
         </div>
         

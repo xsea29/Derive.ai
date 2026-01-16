@@ -36,21 +36,21 @@ const stats = [
 
 export function StatsCards() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-6">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.label}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: index * 0.1 }}
-          className="rounded-lg sm:rounded-xl bg-card border border-border p-3 sm:p-5 card-elevated"
+          className="rounded-lg sm:rounded-xl bg-card border border-border p-3 sm:p-4 md:p-5 lg:p-6 card-elevated tap-target flex flex-col"
         >
           <div className="flex items-center justify-between mb-2 sm:mb-3">
-            <div className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-primary/10">
-              <stat.icon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5 text-primary" />
+            <div className="flex h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+              <stat.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-4.5 md:w-4.5 text-primary" />
             </div>
             <span
-              className={`text-[10px] sm:text-xs font-medium px-1.5 sm:px-2 py-0.5 rounded-full ${
+              className={`text-[10px] sm:text-xs font-medium px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap ${
                 stat.changeType === 'positive'
                   ? 'bg-[hsl(142,71%,45%)]/15 text-[hsl(142,71%,45%)]'
                   : 'bg-muted text-muted-foreground'
@@ -59,8 +59,8 @@ export function StatsCards() {
               {stat.change}
             </span>
           </div>
-          <div className="text-lg sm:text-2xl font-semibold tracking-tight">{stat.value}</div>
-          <div className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">{stat.label}</div>
+          <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight">{stat.value}</div>
+          <div className="text-xs sm:text-sm text-muted-foreground mt-1 sm:mt-1.5 line-clamp-2">{stat.label}</div>
         </motion.div>
       ))}
     </div>
